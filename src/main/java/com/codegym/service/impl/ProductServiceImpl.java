@@ -21,4 +21,9 @@ public class ProductServiceImpl implements IProductService {
 
         return productRepository.findAll();
     }
+
+    @Override
+    public Product findById(Long id) {
+        return productRepository.findById(id);
+    }
 }
