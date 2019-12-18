@@ -21,6 +21,10 @@
 </head>
 <body>
 <h1 class="title">Products List</h1>
+<form th:action="@{search}">
+    <input type="text" name="txtSearch" id="txtSearch">
+    <input type="submit" th:value="Search">
+</form>
 <div>
     <div th:each="product,iterStat : ${products}" th:class="${iterStat.odd}? 'odd'">
         <div class="product-item">

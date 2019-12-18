@@ -5,10 +5,7 @@ import com.codegym.service.IProductService;
 import com.codegym.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -21,22 +18,48 @@ public class ProductController {
     @Autowired
     IProductService productService;
 
-    @RequestMapping(value = "list*",method = RequestMethod.GET)
-    public ModelAndView listProducts(){
+    @RequestMapping(value = "list*", method = RequestMethod.GET)
+    public ModelAndView listProducts() {
 
         List<Product> listProducts = productService.findAllHaveBusiness();
 
         ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products",listProducts);
+        modelAndView.addObject("products", listProducts);
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "product-detail/{id}", method = RequestMethod.GET)
-    public ModelAndView productDetail(@PathVariable Long id){
+    @RequestMapping(value = "product-detail/{id}/{name}", method = RequestMethod.GET)
+    public ModelAndView productDetail(@PathVariable Long id, @PathVariable String name) {
         Product product = productService.findById(id);
         ModelAndView modelAndView = new ModelAndView("/product/detail");
         modelAndView.addObject("product", product);
-        return  modelAndView;
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "search")
+    public ModelAndView searchProduct(@RequestParam("txtSearch") String txtSearch) {
+        Product product = productService.findByName(txtSearch);
+        ModelAndView modelAndView = new ModelAndView("/product/search");
+        modelAndView.addObject("product", product);
+        return modelAndView;
+    }
+
+    @RequestMapping("create")
+    public ModelAndView createForm() {
+        ModelAndView modelAndView = new ModelAndView("/product/create");
+        modelAndView.addObject("product", new Product());
+        return modelAndView;
+    }
+
+    @RequestMapping("save-product")
+    public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
+
+        //add to database
+        productService.save(product);
+
+        ModelAndView modelAndView = new ModelAndView("/product/create");
+        modelAndView.addObject("product", new Product());
+        return modelAndView;
     }
 }
