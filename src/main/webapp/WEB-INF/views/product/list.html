@@ -29,6 +29,7 @@
     <div th:each="product,iterStat : ${products}" th:class="${iterStat.odd}? 'odd'">
         <div class="product-item">
             <p th:text="${product.name}"></p>
+            <img width="150px" height="150px" th:src="@{'/i/' + ${product.image}}">
             <p><a class="detail" th:href="@{product-detail/__${product.id}__}">View Detail</a></p>
         </div>
     </div>
