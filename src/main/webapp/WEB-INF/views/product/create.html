@@ -6,6 +6,14 @@
 </head>
 <body>
 <h1 class="title">Create Product</h1>
+<p th:text="${!true}"></p>
+
+<!-- IF CUSTOMER IS ANONYMOUS -->
+<div th:switch="${status}">
+    <span th:case="${false}">User is not logged in</span>
+    <span th:case="${true}">Logged in user</span>
+    <span th:case="*">Should never happen, but who knows...</span>
+</div>
 <form th:action="@{/product/save-product}" th:object="${productform}" method="post" enctype="multipart/form-data">
     <table>
         <tr>
@@ -26,5 +34,8 @@
         </tr>
     </table>
 </form>
+
+<footer th:replace="footer :: copy"></footer>
+
 </body>
 </html>

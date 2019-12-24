@@ -61,6 +61,9 @@ public class ProductController {
     public ModelAndView createForm() {
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("productform", new ProductForm());
+        modelAndView.addObject("message","");
+        modelAndView.addObject("status",true);
+
         return modelAndView;
     }
 
@@ -94,6 +97,7 @@ public class ProductController {
 
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", new Product());
+        modelAndView.addObject("message","Them moi thanh cong!");
         return modelAndView;
     }
 }
